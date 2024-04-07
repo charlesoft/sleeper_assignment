@@ -16,7 +16,7 @@ defmodule SleeperAssignment.Node do
     field :status, Ecto.Enum, values: @node_status, default: :up
 
     belongs_to :cluster, Cluster
-    belongs_to :child_node, Node
+    belongs_to :parent_node, Node
     belongs_to :network_partition, NetworkPartition
 
     has_one :node, Node
@@ -27,7 +27,7 @@ defmodule SleeperAssignment.Node do
 
   def changeset(node, attrs) do
     node
-    |> cast(attrs, [:type, :status, :cluster_id, :node_id, :network_partition_id])
-    |> validate_required([:type, :status, :cluster_id, :node_id, :network_partition_id])
+    |> cast(attrs, [:type, :status, :cluster_id, :parent_node_id, :network_partition_id])
+    |> validate_required([:type, :status, :cluster_id, :parent_node_id, :network_partition_id])
   end
 end
