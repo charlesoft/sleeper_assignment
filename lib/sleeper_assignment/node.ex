@@ -19,7 +19,7 @@ defmodule SleeperAssignment.Node do
     belongs_to :parent_node, Node
     belongs_to :network_partition, NetworkPartition
 
-    has_one :node, Node
+    has_one :child_node, Node
     has_one :server, Server
 
     timestamps()
@@ -28,6 +28,6 @@ defmodule SleeperAssignment.Node do
   def changeset(node, attrs) do
     node
     |> cast(attrs, [:type, :status, :cluster_id, :parent_node_id, :network_partition_id])
-    |> validate_required([:type, :status, :cluster_id, :parent_node_id, :network_partition_id])
+    |> validate_required([:type, :status, :cluster_id])
   end
 end
