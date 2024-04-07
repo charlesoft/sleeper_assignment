@@ -1,6 +1,6 @@
-defmodule SleeperAssignment.HttpServer do
+defmodule SleeperAssignment.Server do
   @moduledoc """
-  HttpServer model
+  Server model
   """
   use Ecto.Schema
 
@@ -8,11 +8,11 @@ defmodule SleeperAssignment.HttpServer do
 
   alias SleeperAssignment.{Node}
 
-  @http_server_status [:up, :down]
+  @server_status [:up, :down]
 
-  schema "http_servers" do
+  schema "servers" do
     field :url, :string
-    field :status, Ecto.Enum, values: @http_server_status, default: :up
+    field :status, Ecto.Enum, values: @server_status, default: :up
 
     belongs_to :node, Node
 

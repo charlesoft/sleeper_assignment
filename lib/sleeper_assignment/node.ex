@@ -6,7 +6,7 @@ defmodule SleeperAssignment.Node do
 
   import Ecto.Changeset
 
-  alias SleeperAssignment.{Cluster, NetworkPartition, Node}
+  alias SleeperAssignment.{Cluster, NetworkPartition, Node, Server}
 
   @node_types [:duck, :goose]
   @node_status [:up, :down]
@@ -20,6 +20,7 @@ defmodule SleeperAssignment.Node do
     belongs_to :network_partition, NetworkPartition
 
     has_one :node, Node
+    has_one :server, Server
 
     timestamps()
   end
