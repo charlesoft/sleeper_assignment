@@ -11,8 +11,9 @@ defmodule SleeperAssignment.Server do
   @server_status [:up, :down]
 
   schema "servers" do
-    field :url, :string
-    field :status, Ecto.Enum, values: @server_status, default: :up
+    field :port, :integer
+    field :type, :string
+    field :status, Ecto.Enum, values: @server_status, default: :down
 
     belongs_to :node, Node
 
@@ -21,7 +22,7 @@ defmodule SleeperAssignment.Server do
 
   def changeset(http_server, attrs) do
     http_server
-    |> cast(attrs, [:url, :status, :node_id])
-    |> validate_required([:url, :status, :node_id])
+    |> cast(attrs, [:port, :type, :status, :node_id])
+    |> validate_required([:port, :type, :status, :node_id])
   end
 end

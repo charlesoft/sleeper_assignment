@@ -3,9 +3,9 @@ defmodule SleeperAssignment.Repo.Migrations.CreateTableHttpServers do
 
   def change do
     create table(:servers) do
-      add :url, :string, null: false
+      add :port, :integer, null: false
       add :type, :string, default: "http", null: false
-      add :status, :string, default: "up", null: false
+      add :status, :string, default: "down", null: false
 
       add :node_id, references(:nodes, on_delete: :delete_all)
 
