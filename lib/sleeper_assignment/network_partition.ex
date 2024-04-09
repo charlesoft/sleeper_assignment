@@ -11,7 +11,7 @@ defmodule SleeperAssignment.NetworkPartition do
   schema "network_partitions" do
     belongs_to :cluster, Cluster
 
-    has_many :nodes, Node
+    has_one :nodes, Node
 
     timestamps()
   end
