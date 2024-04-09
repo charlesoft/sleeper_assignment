@@ -20,8 +20,8 @@ defmodule SleeperAssignment.Server do
     timestamps()
   end
 
-  def changeset(http_server, attrs) do
-    http_server
+  def changeset(server, attrs) do
+    server
     |> cast(attrs, [:port, :type, :status, :node_id])
     |> validate_required([:port, :type, :status, :node_id])
   end
