@@ -55,6 +55,9 @@ defmodule SleeperAssignment.Nodes do
     |> Repo.one()
   end
 
+  @doc """
+  Update a node with the given attributes.
+  """
   def update(%Node{} = node, attrs) do
     attrs = handle_network_partition(node, attrs)
 
