@@ -2,6 +2,9 @@ defmodule SleeperAssignment.HttpServer do
   @moduledoc """
   HTTP server that listens for incoming connections and serves them.
   """
+
+  alias SleeperAssignment.Nodes
+
   def start(port) do
     IO.puts("Starting HTTP server on port #{port}...")
 
@@ -10,31 +13,31 @@ defmodule SleeperAssignment.HttpServer do
 
     IO.puts("\n Listening for connection requests on port #{port}...\n")
 
-    accept_loop(listen_socket)
+    accept_loop(listen_socket, port)
   end
 
   @doc """
   Accepts client connections and serves them.
   """
-  def accept_loop(listen_socket) do
+  def accept_loop(listen_socket, port) do
     IO.puts("⌛️ Wating to accept client connection...")
 
     {:ok, client_socket} = :gen_tcp.accept(listen_socket)
 
     IO.puts("Connection accepted! 🎉\n")
 
-    serve(client_socket)
+    serve(client_socket, port)
 
-    accept_loop(listen_socket)
+    accept_loop(listen_socket, port)
   end
 
   @doc """
   Serves the client by reading the request, generating a response, and writing the response.
   """
-  def serve(client_socket) do
+  def serve(client_socket, port) do
     client_socket
     |> read_request()
-    |> generate_response()
+    |> generate_response(port)
     |> write_response(client_socket)
   end
 
@@ -51,15 +54,17 @@ defmodule SleeperAssignment.HttpServer do
   end
 
   @doc """
-  Returns a generic HTTP response.
+  Returns a HTTP response for checking node's current status.
   """
-  def generate_response(_request) do
+  def generate_response(_request, port) do
+    node = Nodes.get_node_by_port(port)
+
     """
     HTTP/1.1 200 OK\r
     Content-Type: text/html\r
     Content-Length: 16\r
     \r
-    There you go!
+    Node #{node.id} is #{node.status}!
     """
   end
 
