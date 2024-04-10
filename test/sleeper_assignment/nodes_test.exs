@@ -5,7 +5,7 @@ defmodule SleeperAssignment.NodesTest do
 
   alias SleeperAssignment.{Node, Nodes, Repo}
 
-  describe "nodes/1" do
+  describe "list_nodes/1" do
     setup do
       cluster = insert!(:cluster)
       {:ok, cluster: cluster}
@@ -17,7 +17,7 @@ defmodule SleeperAssignment.NodesTest do
       %{id: node_three_id} = insert!(:node, status: :down, cluster: cluster)
 
       assert [%Node{id: ^node_one_id}, %Node{id: ^node_three_id}] =
-               Nodes.nodes(%{"cluster_id" => cluster_id})
+               Nodes.list_nodes(%{"cluster_id" => cluster_id})
     end
 
     test "lists all nodes for the given cluster_id and network_partition_id", %{
@@ -32,7 +32,7 @@ defmodule SleeperAssignment.NodesTest do
       _node_three = insert!(:node, status: :down, cluster: cluster)
       params = %{"cluster_id" => cluster_id, "network_partition_id" => network_partition.id}
 
-      assert [%Node{id: ^node_one_id}] = Nodes.nodes(params)
+      assert [%Node{id: ^node_one_id}] = Nodes.list_nodes(params)
     end
   end
 

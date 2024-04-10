@@ -2,11 +2,11 @@ defmodule SleeperAssignment.Nodes do
   @moduledoc """
   Nodes context
   """
-  alias SleeperAssignment.{Repo, NetworkPartition, Node, Server}
+  alias SleeperAssignment.{Repo, NetworkPartitions, Node, Server}
 
   import Ecto.Query
 
-  def nodes(params) do
+  def list_nodes(params) do
     Node
     |> apply_filters(params)
     |> preload([:server])
@@ -56,16 +56,7 @@ defmodule SleeperAssignment.Nodes do
   end
 
   def update(%Node{} = node, attrs) do
-    attrs =
-      if Map.get(attrs, "status") == "lost" do
-        {:ok, network_partition} = create_network_partition(node)
-
-        attrs
-        |> Map.delete("status")
-        |> Map.put("network_partition_id", network_partition.id)
-      else
-        attrs
-      end
+    attrs = handle_network_partition(node, attrs)
 
     with changeset <- Node.changeset(node, attrs),
          :ok <- ensure_change_type(attrs, node),
@@ -77,9 +68,17 @@ defmodule SleeperAssignment.Nodes do
     end
   end
 
-  defp create_network_partition(node) do
-    %NetworkPartition{cluster_id: node.cluster_id}
-    |> Repo.insert()
+  defp handle_network_partition(node, attrs) do
+    if Map.get(attrs, "status") == "lost" do
+      {:ok, network_partition} =
+        NetworkPartitions.create_network_partition(%{"cluster_id" => node.cluster_id})
+
+      attrs
+      |> Map.delete("status")
+      |> Map.put("network_partition_id", network_partition.id)
+    else
+      attrs
+    end
   end
 
   defp ensure_change_type(%{"type" => "goose"}, %Node{network_partition_id: nil}) do
