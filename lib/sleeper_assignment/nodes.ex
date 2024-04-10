@@ -66,6 +66,7 @@ defmodule SleeperAssignment.Nodes do
          {:ok, node} <- Repo.update(changeset) do
       update_new_goose_for_cluster(changeset, node)
       update_server_status(node)
+      maybe_exit_node_process(node)
 
       {:ok, node}
     end
@@ -148,4 +149,19 @@ defmodule SleeperAssignment.Nodes do
   end
 
   defp update_server_status(_node), do: {:ok, nil}
+
+  defp maybe_exit_node_process(%Node{status: :down} = node) do
+    node = Repo.preload(node, :server)
+    process_name = String.to_atom("node_#{node.id}")
+
+    case Process.whereis(process_name) do
+      nil ->
+        :noop
+
+      pid ->
+        Process.exit(pid, :normal)
+    end
+  end
+
+  defp maybe_exit_node_process(_node), do: :noop
 end
