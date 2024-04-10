@@ -46,8 +46,7 @@ node_four =
   Repo.insert!(%Node{
     type: :duck,
     status: :down,
-    cluster_id: cluster_one.id,
-    parent_node_id: node_three.id
+    cluster_id: cluster_one.id
   })
 
 _server_four = Repo.insert!(%Server{port: Enum.random(4_000..10_000), node_id: node_four.id})
@@ -56,8 +55,7 @@ node_five =
   Repo.insert!(%Node{
     type: :duck,
     status: :down,
-    cluster_id: cluster_one.id,
-    parent_node_id: node_four.id
+    cluster_id: cluster_one.id
   })
 
 _server_five = Repo.insert!(%Server{port: Enum.random(4_000..10_000), node_id: node_five.id})
@@ -66,8 +64,7 @@ node_six =
   Repo.insert!(%Node{
     type: :duck,
     status: :down,
-    cluster_id: cluster_one.id,
-    parent_node_id: node_five.id
+    cluster_id: cluster_one.id
   })
 
 _server_six = Repo.insert!(%Server{port: Enum.random(4_000..10_000), node_id: node_six.id})
@@ -76,8 +73,7 @@ node_seven =
   Repo.insert!(%Node{
     type: :duck,
     status: :down,
-    cluster_id: cluster_one.id,
-    parent_node_id: node_six.id
+    cluster_id: cluster_one.id
   })
 
 _server_seven = Repo.insert!(%Server{port: Enum.random(4_000..10_000), node_id: node_seven.id})
@@ -106,8 +102,7 @@ node_ten =
   Repo.insert!(%Node{
     type: :duck,
     status: :down,
-    cluster_id: cluster_two.id,
-    parent_node_id: node_nine.id
+    cluster_id: cluster_two.id
   })
 
 _server_ten = Repo.insert!(%Server{port: Enum.random(4_000..10_000), node_id: node_ten.id})
@@ -116,8 +111,7 @@ node_eleven =
   Repo.insert!(%Node{
     type: :duck,
     status: :down,
-    cluster_id: cluster_two.id,
-    parent_node_id: node_ten.id
+    cluster_id: cluster_two.id
   })
 
 _server_eleven = Repo.insert!(%Server{port: Enum.random(4_000..10_000), node_id: node_eleven.id})

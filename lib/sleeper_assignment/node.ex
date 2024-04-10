@@ -16,10 +16,8 @@ defmodule SleeperAssignment.Node do
     field :status, Ecto.Enum, values: @node_status, default: :up
 
     belongs_to :cluster, Cluster
-    belongs_to :parent_node, Node
     belongs_to :network_partition, NetworkPartition
 
-    has_one :child_node, Node
     has_one :server, Server
 
     timestamps()
@@ -27,7 +25,7 @@ defmodule SleeperAssignment.Node do
 
   def changeset(node, attrs) do
     node
-    |> cast(attrs, [:type, :status, :cluster_id, :parent_node_id, :network_partition_id])
+    |> cast(attrs, [:type, :status, :cluster_id, :network_partition_id])
     |> validate_required([:type, :status, :cluster_id])
     |> validate_type_and_status()
     |> unique_constraint([:type, :cluster_id],
@@ -37,10 +35,6 @@ defmodule SleeperAssignment.Node do
     |> check_constraint(:type,
       name: :type_and_status,
       message: "can't have a node with type 'goose' and status 'down'"
-    )
-    |> check_constraint(:parent_node_id,
-      name: :parent_node_id_only_for_and_network_partition_id_nil,
-      message: "can't have parent_id and be part of network partition or vice-versa"
     )
   end
 
