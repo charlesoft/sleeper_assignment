@@ -37,7 +37,7 @@ alias SleeperAssignment.{Repo, Cluster}
 {:ok, cluster_pid} = ClusterSupervisor.start_link(cluster_one)
 ```
 
-You should see print like below showing the nodes and its HTTP servers getting started:
+You should see a print like the one below showing the nodes and its HTTP servers getting started:
 
 ```
 Starting node server for Node 1...
@@ -141,16 +141,6 @@ mix test
 ```
 
 Make sure to take at the tests for the `Nodes` module at `test/sleeper_assignment/nodes_test.exs` which shows all the scenarios being tested. This will help understand how to use `Nodes` interface to interact this cluster of nodes.
-
-To start your Phoenix server:
-
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## Learn more
 
