@@ -28,6 +28,7 @@ defmodule SleeperAssignment.Node do
     |> cast(attrs, [:type, :status, :cluster_id, :network_partition_id])
     |> validate_required([:type, :status, :cluster_id])
     |> validate_type_and_status()
+    |> validate_network_partition_and_status()
     |> unique_constraint([:type, :cluster_id],
       name: :unique_cluster_id_and_type_goose,
       message: "must have only one node of type of 'goose'"
@@ -55,4 +56,17 @@ defmodule SleeperAssignment.Node do
   end
 
   def validate_type_and_status(changeset), do: changeset
+
+
+  def validate_network_partition_and_status(%Ecto.Changeset{changes: %{network_partition_id: network_partition_id}} = changeset) do
+    if network_partition_id do
+      changeset
+      |> change(type: :duck)
+      |> change(status: :down)
+    else
+      changeset
+    end
+  end
+
+  def validate_network_partition_and_status(changeset), do: changeset
 end
