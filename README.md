@@ -30,7 +30,7 @@ iex -S mix
 Let's start our cluster:
 
 ```elixir
-alias SleeperAssignment.{Repo, Cluster}
+alias SleeperAssignment.{Repo, Cluster, ClusterSupervisor}
 
 [cluster_one, _cluster_two] = Repo.all(Cluster)
 
